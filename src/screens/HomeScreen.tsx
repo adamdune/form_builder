@@ -11,12 +11,12 @@ import {
   Keyboard,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {RootStackParamList} from '../model/reactNavigationType';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux';
 import {addNewFormField, resetForm, setTitle} from '../redux/formSlice';
 import {createNewFormField, FormFieldType} from '../model/formField';
-import {Picker} from '@react-native-picker/picker';
 import FormFieldContainer from '../components/FormFieldContainer';
 import commonStyles from '../theme/commonStyles';
 import colors from '../theme/colors';
@@ -83,23 +83,24 @@ const HomeScreen = ({navigation}: Props) => {
           <View style={{height: 20}} />
           <Text>Field Type</Text>
           <View style={{height: 10}} />
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={newFormFieldType}
-              onValueChange={(value) => {
-                setNewFormFieldType(value as FormFieldType);
-              }}
-              style={{
-                paddingVertical: 15,
-                width: '100%',
-              }}
-              mode="dropdown">
-              <Picker.Item label="Text" value={FormFieldType.text} />
-              <Picker.Item label="Number" value={FormFieldType.number} />
-              <Picker.Item label="Checkbox" value={FormFieldType.checkbox} />
-              <Picker.Item label="Toggle" value={FormFieldType.toggle} />
-            </Picker>
-          </View>
+          <DropDownPicker
+            items={[
+              {label: 'Text', value: FormFieldType.text},
+              {label: 'Number', value: FormFieldType.number},
+              {label: 'Checkbox', value: FormFieldType.checkbox},
+              {label: 'Toggle', value: FormFieldType.toggle},
+            ]}
+            defaultValue={FormFieldType.text}
+            containerStyle={{height: 40}}
+            style={{backgroundColor: '#fafafa'}}
+            itemStyle={{
+              justifyContent: 'flex-start',
+            }}
+            dropDownStyle={{backgroundColor: '#fafafa'}}
+            onChangeItem={(item) => {
+              setNewFormFieldType(item.value);
+            }}
+          />
           <View style={{height: 20}} />
           <Button
             title="Add New Field"
@@ -136,11 +137,6 @@ const HomeScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 18,
-  },
-  pickerContainer: {
-    borderColor: colors.gray200,
-    borderWidth: 1,
-    borderRadius: 5,
   },
 });
 
