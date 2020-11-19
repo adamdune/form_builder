@@ -53,14 +53,15 @@ const FormFieldItem = ({formField, index, editable = true}: Props) => {
             <TextInput
               keyboardType="numeric"
               value={formField.value.toString()}
-              onChangeText={(text) =>
+              onChangeText={(text) => {
+                const parsedInt = parseInt(text, 10);
                 dispatch(
                   editFormFieldValue({
-                    value: text !== '' ? parseInt(text, 10) : 0,
+                    value: isNaN(parsedInt) ? 0 : parsedInt,
                     index,
                   }),
-                )
-              }
+                );
+              }}
             />
             <View style={{width: 15}} />
             <TouchableOpacity
