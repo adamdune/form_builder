@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {FormField, FormFieldType} from '../model/formField';
@@ -33,6 +34,7 @@ const FormFieldItem = ({formField, index, editable = true}: Props) => {
             flex: 1,
           }}>
           <Text style={styles.formFieldTitle}>{formField.title}</Text>
+          <View style={{height: 5}} />
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               style={styles.plusMinusButton}
@@ -107,6 +109,7 @@ const FormFieldItem = ({formField, index, editable = true}: Props) => {
       return (
         <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
           <CheckBox
+            boxType="square"
             tintColors={{true: colors.primary}}
             onTintColor={colors.primary}
             onCheckColor={colors.primary}
@@ -121,6 +124,7 @@ const FormFieldItem = ({formField, index, editable = true}: Props) => {
               )
             }
           />
+          {Platform.OS === 'ios' ? <View style={{width: 15}} /> : null}
           <Text style={styles.formFieldTitle}>{formField.title}</Text>
         </View>
       );
