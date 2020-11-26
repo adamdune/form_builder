@@ -52,3 +52,9 @@ export type FormField =
   | NumberFormField
   | CheckboxFormField
   | ToggleFormField;
+
+// export type FormField = {
+//   type: FormFieldType;
+//   title: string;
+//   value: boolean | string | number;
+// };

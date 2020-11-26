@@ -1,5 +1,5 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Text,
@@ -16,7 +16,12 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {RootStackParamList} from '../model/reactNavigationType';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux';
-import {addNewFormField, resetForm, setTitle} from '../redux/formSlice';
+import {
+  addNewFormField,
+  resetForm,
+  setTitle,
+  fetchInitialState,
+} from '../redux/formSlice';
 import {createNewFormField, FormFieldType} from '../model/formField';
 import FormFieldContainer from '../components/FormFieldContainer';
 import commonStyles from '../theme/commonStyles';
@@ -28,10 +33,17 @@ type Props = {
 };
 
 const HomeScreen = ({navigation}: Props) => {
-  const {formFields, title} = useSelector((state: RootState) => state.form);
+  const {formFields, title, errorMessage} = useSelector(
+    (state: RootState) => state.form,
+  );
   const dispatch = useDispatch();
   const [newFormFieldTitle, setNewFormFieldTitle] = useState('');
   const [newFormFieldType, setNewFormFieldType] = useState(FormFieldType.text);
+
+  useEffect(() => {
+    dispatch(fetchInitialState(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onPressAdd = () => {
     if (!newFormFieldTitle) {
@@ -61,6 +73,9 @@ const HomeScreen = ({navigation}: Props) => {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView contentContainerStyle={commonStyles.screenContainer}>
         <Text style={commonStyles.header}>Let's Build A Form</Text>
+        {errorMessage ? (
+          <Text style={commonStyles.errorCard}>{errorMessage}</Text>
+        ) : null}
         <View style={{height: 20}} />
         <View style={commonStyles.card}>
           <Text>

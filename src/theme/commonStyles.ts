@@ -24,6 +24,15 @@ const commonStyles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   subText: {fontSize: 12, color: colors.gray600},
+  errorCard: {
+    backgroundColor: 'rgb(254, 202, 202)',
+    color: 'rgb(153, 27, 27)',
+    padding: 15,
+    margin: 10,
+    borderRadius: 5,
+    borderColor: 'rgb(153, 27, 27)',
+    borderWidth: 1,
+  },
 });
 
 export default commonStyles;
