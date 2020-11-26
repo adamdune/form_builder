@@ -17,8 +17,6 @@ type Props = {
 const GeneratedFormScreen = ({navigation}: Props) => {
   const {title, formFields} = useSelector((state: RootState) => state.form);
 
-  console.log('>>>', title, formFields);
-
   // allows default title to stay consistent as this prevents Math.random from being called every render
   const [formTitle] = useState(
     title || `Untitled Form ${Math.ceil(Math.random() * 3000)}`,
